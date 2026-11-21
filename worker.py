@@ -127,4 +127,14 @@ def process_pending_jobs():
 
 
 if __name__ == "__main__":
-    process_pending_jobs()
+
+    print("Webhook background worker started...")
+
+    while True:
+        try:
+            process_pending_jobs()
+
+        except Exception as error:
+            print(f"Worker error: {error}")
+
+        time.sleep(2)
