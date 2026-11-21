@@ -5,10 +5,13 @@ from typing import Any
 from uuid import uuid4
 from sqlalchemy.orm import Session
 
-from database import get_db
-from models import WebhookJob
+from database import get_db, engine
+from models import Base, WebhookJob
 
 app = FastAPI()
+@app.on_event("startup")
+def create_tables():
+    Base.metadata.create_all(bind=engine)
 
 
 class WebhookRequest(BaseModel):
